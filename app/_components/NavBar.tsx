@@ -168,7 +168,7 @@ export default function NavBar() {
                                       key={subCourse._id}
                                       className="mt-1"
                                     >
-                                      <div className="block select-none space-y-1 border-l border-r hover:bg-slate-200 dark:hover:bg-gray-900 rounded-lg p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                                       <div style={{minHeight: '109px !important'}} className="block overflow-hidden select-none space-y-1 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-gray-900 rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground max-w-64">
                                         <div className="space-y-1 flex items-center content-center text-center">
                                           <Badge>Course-Name:</Badge>
                                           <h4 className="text-md mb-2 font-medium ml-2 pb-2">
@@ -553,7 +553,7 @@ export default function NavBar() {
                                             key={subCourse._id}
                                             className="overflow-hidden flex flex-col dark:bg-transparent border-l border-r m-1 rounded-lg"
                                           >
-                                            <div className="block overflow-hidden select-none space-y-1 hover:bg-slate-200 dark:hover:bg-gray-900 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                                            <div style={{minHeight: '109px !important'}} className="block bg-slate-200 overflow-hidden select-none space-y-1 hover:bg-slate-300 dark:bg-slate-800 dark:hover:bg-gray-900 rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground max-w-64">
                                               <div className="space-y-1 flex items-center content-center text-center">
                                                 <Badge>Course-Name:</Badge>
                                                 <h4 className="text-md mb-2 font-medium ml-2 pb-2">
@@ -658,7 +658,7 @@ export default function NavBar() {
                                             key={subCourse._id}
                                             className="overflow-hidden flex flex-col dark:bg-transparent border-l border-r m-1 rounded-lg"
                                           >
-                                            <div className="block overflow-hidden select-none space-y-1 hover:bg-slate-200 dark:hover:bg-gray-900 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground">
+                                             <div style={{minHeight: '109px !important'}} className="block bg-slate-200 overflow-hidden select-none space-y-1 hover:bg-slate-300 dark:hover:bg-gray-900 dark:bg-slate-800 rounded-md p-2 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground max-w-64">
                                               <div className="space-y-1 flex items-center content-center text-center">
                                                 <Badge>Course-Name:</Badge>
                                                 <h4 className="text-md mb-2 font-medium ml-2 pb-2">
