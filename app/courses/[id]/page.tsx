@@ -7,6 +7,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useUser } from "@clerk/nextjs";
 import { toast } from "sonner";
 import { LucideShare2, LockIcon, Grid2x2 } from "lucide-react";
 import McqView from "@/app/_components/McqView";
@@ -19,6 +20,7 @@ export default function Home({ params }: { params: { id: String } }) {
   const [mcq, setMcq] = React.useState([]);
   const [exp, setExp] = React.useState(false);
   const [topic, setTopic] = React.useState("");
+  const { user } = useUser();
   const [con, setCont] = React.useState("Loading");
   const loadCon = async () => {
     setCont("Loading");
@@ -91,9 +93,9 @@ export default function Home({ params }: { params: { id: String } }) {
     <div className="flex flex-col h-screen">
       <NavBar />
       <div className="max-md:hidden flex flex-grow scrollbar-hide w-screen overflow-hidden outline-none border-none">
-        <div className="w-1/5 h-full scrollbar-hide outline-none border-none ml-3">
-          <ScrollArea className="h-full w-full rounded-md border-none overflow-y-hidden">
-            <div className="flex flex-col scrollbar-hide dark:bg-gray-950 dark:shadow-gray-900 bg-teal-50 shadow-md shadow-teal-300">
+        <div className="w-1/5 h-full scrollbar-hide border-none ml-3 overflow-hidden">
+          <ScrollArea className="h-full max-w-xs rounded-md border-none overflow-y-hidden">
+            <div className="max-w-xs flex flex-col scrollbar-hide dark:bg-gray-950 dark:shadow-gray-900 bg-teal-50 shadow-md shadow-teal-300">
               <Button className="-ml-4" variant={"default"}>
                 Choose Topic
                 {cer ? (
@@ -103,8 +105,12 @@ export default function Home({ params }: { params: { id: String } }) {
                       className="ml-3"
                       onClick={() => {
                         if (exp == false) {
-                          toast("Redirecting.....");
-                          router.push(`/exams/${cId}`);
+                          if(user){
+                            toast("Redirecting.....");
+                            router.push(`/exams/${cId}`);
+                          }else{
+                            toast("Please Login to Attempt Exam");
+                          }
                         } else {
                           toast("Buy or Log-IN to Get Certificate");
                           router.push(`/buycourse/${cId}`);
@@ -128,47 +134,64 @@ export default function Home({ params }: { params: { id: String } }) {
                 </Badge>
               </Button>
             </div>
-            <div className="mt-4 border-none scrollbar-hide">
+            <div className="mt-4 max-w-xs border-none scrollbar-hide">
               {titles.length > 0 &&
                 titles.map((title: any, index: number) => (
                   <div key={title._id} className="flex flex-col scrollbar-hide">
                     {exp == true && title.paid == true ? (
                       <>
-                        <Button
+                        <div
                           onClick={() => {
                             toast(
                               "You need to Buy to view this content or Log-IN to your Account"
                             );
                             router.push(`/buycourse/${cId}`);
                           }}
-                          variant={"outline"}
-                          className="w-full"
+                          className="max-w-xs flex border-double border-e-2 border-l-2"
                         >
-                          {title.name} {title.mcq.length > 0 ? (
+                          {title.mcq.length > 0 ? (
                             <>
-                            &nbsp;&nbsp;<span><Grid2x2 className="m-1" onClick={()=>{toast("You need to Buy to view this content or Log-IN to your Account");router.push(`/buycourse/${cId}`);}}/></span>
+                              <div className="">
+                                {title.name}
+                              </div>
+                              <div className="">
+                              <>
+                                &nbsp;&nbsp;<span><Grid2x2 className="m-1" onClick={()=>{toast("You need to Buy to view this content or Log-IN to your Account");router.push(`/buycourse/${cId}`);}}/></span>
+                              </>
+                              </div>
                             </>
-                          ): ( <></>)}
+                          ): (
+                          <div className="w-full">
+                            {title.name}
+                          </div>)}
                            &nbsp;<LockIcon className="h-4 w-4"></LockIcon>
-                        </Button>
+                        </div>
                       </>
                     ) : (
                       <>
-                        <Button
+                        <div
                           onClick={() => {
                             setCs(false);
                             setTopic(title._id);
                           }}
-                          variant={"outline"}
-                          className="w-full"
+                          className="max-w-xs flex border-double border-e-2 border-l-2"
                         >
-                          {title.name}
                           {title.mcq.length > 0 ? (
                             <>
-                            &nbsp;&nbsp;<span><Grid2x2 className="m-1" onClick={(e)=>{e.stopPropagation(); setCs(true); setMcq(title.mcq[0].questions);}}/></span>
+                              <div className="">
+                                {title.name}
+                              </div>
+                              <div className="">
+                              <>
+                                &nbsp;&nbsp;<span><Grid2x2 className="mx-auto mb-5" onClick={(e)=>{e.stopPropagation(); setCs(true); setMcq(title.mcq[0].questions);}}/></span>
+                              </>
+                              </div>
                             </>
-                          ): ( <></>)}
-                        </Button>
+                          ): (
+                          <div className="w-full">
+                            {title.name}
+                          </div>)}
+                        </div>
                       </>
                     )}
                     <Separator className="my-2 min-w-full border-teal-50 dark:border-teal-900" />
@@ -302,8 +325,12 @@ export default function Home({ params }: { params: { id: String } }) {
               className="ml-3"
               onClick={() => {
                 if (exp == false) {
-                  toast("Redirecting.....");
-                  router.push(`/exams/${cId}`);
+                  if(user){
+                    toast("Redirecting.....");
+                    router.push(`/exams/${cId}`);
+                  }else{
+                    toast("Please Login to Attempt Exam");
+                  }
                 } else {
                   toast("Buy or Log-IN to Get Certificate");
                   router.push(`/buycourse/${cId}`);
